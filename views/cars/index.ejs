@@ -1,0 +1,240 @@
+<%- include('../partials/header') -%>
+
+<h2>Automobiliai nuomai</h2>
+
+<div class="messages-container">
+  <div id="successMessage" class="message success">Žinutė išsiųsta sėkmingai. Netrukus su Jumis susisieksime!</div>
+  <div id="errorMessage" class="message error2">Nepavyko išsiųsti žinutės. Bandykite dar kartą!</div>
+  <div id="editSuccess" class="message success">Automobilio informacija sėkmingai atnaujinta.</div>
+  <div id="editError" class="message error2">Nepavyko atnaujinti automobilio informaciją.</div>
+  <div id="deleteSuccess" class="message success">Automobilis pašalintas sėkmingai.</div>
+  <div id="deleteError" class="message error2">Nepavyko pašalinti automobilio.</div>
+</div>
+
+<ul class="car-list">
+  <% cars.forEach(car => { %>
+    <li>
+      <img src="<%= car.image %>" alt="<%= car.brand %> <%= car.model %>">
+      <h3><%= car.brand %> <%= car.model %></h3>
+      <p>Metai: <%= car.year %></p>
+      <p>Variklio tipas: <%= car.engine %></p>
+      <p>Transmisija: <%= car.transmission %></p>
+      <p>Galia: <%= car.power %> kW</p>
+      <p>Kuro sąnaudos: <%= car.consumption %> l</p>
+      <p>Kaina: <%= car.price %> €/mėn</p>
+      <div class="btn-group">
+        <button class="rent-car-btn">Išsinuomoti</button>
+        <button class="edit-car-btn" onclick="openModal('<%= car._id %>')" data-car-id="<%= car._id %>">Redaguoti</button>
+        <button class="delete-car-btn" data-car-id="<%= car._id %>">Ištrinti</button>
+      </div>
+    </li>
+  <% }) %>
+</ul>
+<!-- Redagavimo modal -->
+<div id="editModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <form class="edit-car-form" id="edit-car-form">
+          <label for="brand">Markė:</label>
+          <input type="text" id="brand" name="brand" required>
+          <label for="model">Modelis:</label>
+          <input type="text" id="model" name="model" required>
+          <label for="year">Metai:</label>
+          <input type="number" id="year" name="year" required>
+          <label for="engine">Variklio tipas:</label>
+          <input type="text" id="engine" name="engine" required>
+          <label for="transmission">Transmisija:</label>
+          <input type="text" id="transmission" name="transmission" required>
+          <label for="power">Galia (kW):</label>
+          <input type="number" id="power" name="power" required>          
+          <label for="consumption">Kuro sąnaudos (l):</label>
+          <input type="number" id="consumption" name="consumption" required>
+          <label for="price">Kaina (€/mėn):</label>
+          <input type="text" id="price" name="price" required>
+          <button type="submit">Atnaujinti</button>
+        </form>
+    </div>
+</div>
+<!-- Nuomos modal -->
+<div id="rentModal" class="modal">
+  <div class="modal-content">
+      <span class="close">&times;</span>
+      <form id="messageForm">
+          <h2>Išsirinkai? Parašyk mums!</h2>
+          <label for="name">Vardas:</label>
+          <input type="text" id="name" name="name" required>
+          <label for="email">El. Paštas:</label>
+          <input type="email" id="email" name="email" required>
+          <label for="message">Žinutė:</label>
+          <textarea id="message" name="message" required></textarea>
+          <button type="button" onclick="sendMessage(event)" >Siųsti</button>
+      </form>
+  </div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+
+// ***************DELETE*****************
+const deleteButtons = document.querySelectorAll('.delete-car-btn')
+
+    deleteButtons.forEach(button => {
+      button.addEventListener('click', async () => {
+        const carId = button.dataset.carId
+        const confirmed = confirm('Ar tikrai norite ištrinti automobilį?')
+
+        if (confirmed) {
+          try {
+            const res = await fetch(`/cars/${carId}`, {
+              method: 'DELETE'
+            })
+            if (res.ok) {
+              window.scrollTo({ top: 0, behavior: 'smooth' })
+              document.getElementById('deleteSuccess').style.display = 'block'
+                setTimeout(() => {
+                  document.getElementById('deleteSuccess').style.display = 'none'
+                  location.reload()
+                }, 3000)
+            } else {
+              window.scrollTo({ top: 0, behavior: 'smooth' })
+              document.getElementById('deleteError').style.display = 'block'
+                  setTimeout(() => {
+                    document.getElementById('deleteError').style.display = 'none'
+                    location.reload()
+                  }, 3000)
+            }
+          } catch (err) {
+            console.log(err)
+          }
+        }
+      })
+    })
+
+// ************PUT*************
+const editButtons = document.querySelectorAll('.edit-car-btn')
+const modal = document.getElementById('editModal')
+const editCloseBtns = document.querySelectorAll('#editModal .close')
+
+  editButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    const carId = button.dataset.carId
+    openModal(carId)
+  })
+})
+
+editCloseBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      editModal.style.display = 'none'
+    })
+  })
+
+window.addEventListener('click', (e) => {
+  if (e.target === editModal) {
+      editModal.style.display = 'none'
+    }
+  })
+})
+
+  function openModal(carId) {
+    const modal = document.getElementById('editModal')
+    const form = document.getElementById('edit-car-form')
+    form.setAttribute('action', `/cars/${carId}`)
+
+    modal.style.display = 'block'
+  }
+
+const form = document.getElementById('edit-car-form')
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault()
+
+  const formData = new FormData(form)
+  const carId = form.getAttribute('action').split('/').pop()
+
+  try {
+    const res = await fetch(`/cars/${carId}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(Object.fromEntries(formData))
+    })
+
+    if (res.ok) {
+      document.getElementById('editModal').style.display = 'none'
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+      document.getElementById('editSuccess').style.display = 'block'
+        setTimeout(() => {
+          document.getElementById('editSuccess').style.display = 'none'
+          location.reload()
+        }, 4000)
+    } else {
+      document.getElementById('editModal').style.display = 'none'
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+      document.getElementById('editError').style.display = 'block'
+          setTimeout(() => {
+            document.getElementById('editError').style.display = 'none'
+            location.reload()
+          }, 4000)
+    }
+  } catch (err) {
+    console.log(err)
+  }
+})
+
+// Nuomos modal JavaScript
+async function sendMessage() {
+  event.preventDefault()
+  const name = document.getElementById('name').value
+  const email = document.getElementById('email').value
+  const message = document.getElementById('message').value
+
+  try {
+    const res = await fetch('/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, message })
+    })
+
+    if (res.ok) {
+      document.getElementById('rentModal').style.display = 'none'
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+      document.getElementById('successMessage').style.display = 'block'
+        setTimeout(() => {
+          document.getElementById('successMessage').style.display = 'none'
+        }, 4000)
+    } else {
+        document.getElementById('rentModal').style.display = 'none'
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+        document.getElementById('errorMessage').style.display = 'block'
+          setTimeout(() => {
+            document.getElementById('errorMessage').style.display = 'none'
+          }, 4000)
+    }
+  } catch (err) {
+    alert('Klaida siunčiant žinutę:', err)
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const rentModal = document.getElementById('rentModal')
+  const rentBtns = document.querySelectorAll('.rent-car-btn')
+  const rentCloseBtns = document.querySelectorAll('#rentModal .close')
+
+  rentBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      rentModal.style.display = 'block'
+    })
+  })
+  rentCloseBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      rentModal.style.display = 'none'
+    })
+  })
+
+  window.addEventListener('click', (e) => {
+    if (e.target === rentModal) {
+      rentModal.style.display = 'none';
+    }
+  })
+})
+</script>
+
+<%- include('../partials/footer') -%>

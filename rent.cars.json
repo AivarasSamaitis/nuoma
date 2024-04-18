@@ -1,0 +1,72 @@
+[{
+  "_id": {
+    "$oid": "661ad53283828e44021183f5"
+  },
+  "image": "3051.jpeg",
+  "brand": "Audi",
+  "model": "A4",
+  "year": 2022,
+  "engine": "2.0 Dyzelinis",
+  "transmission": "Mechaninė",
+  "power": 190,
+  "consumption": 5.5,
+  "price": 750
+},
+{
+  "_id": {
+    "$oid": "661b0d61070890c02bd372ff"
+  },
+  "brand": "Lexus",
+  "model": "ES 350",
+  "year": 2023,
+  "engine": "3.5 Dyzelinis",
+  "transmission": "Automatinė",
+  "power": 256,
+  "consumption": 10,
+  "price": 1200,
+  "__v": 0,
+  "image": "3229.jpeg"
+},
+{
+  "_id": {
+    "$oid": "661b156583828e44021183f7"
+  },
+  "image": "2912.jpeg",
+  "brand": "Mercedes-Benz",
+  "model": "C-Class",
+  "year": 2020,
+  "engine": "2.0 Turbo Benzinis",
+  "transmission": "Automatinė",
+  "power": 200,
+  "consumption": 5.8,
+  "price": 950
+},
+{
+  "_id": {
+    "$oid": "661b156583828e44021183f6"
+  },
+  "image": "2901.jpeg",
+  "brand": "BMW",
+  "model": "3 Series",
+  "year": 2021,
+  "engine": "2.0 Dyzelinis",
+  "transmission": "Automatinė",
+  "power": 190,
+  "consumption": 6,
+  "price": 850
+},
+{
+  "_id": {
+    "$oid": "662045d8c55eb2a16875c592"
+  },
+  "brand": "Toyota",
+  "model": "RAV4 Prime",
+  "year": 2022,
+  "engine": "4.0 Dyzelinis",
+  "transmission": "Automatinė",
+  "power": 315,
+  "consumption": 14,
+  "price": 1300,
+  "image": "/cars/1713391064552.jpeg",
+  "__v": 0
+}]

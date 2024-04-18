@@ -1,0 +1,296 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet');
+
+body{
+  margin: 20px 40px;
+  font-size: 1.2rem;
+  letter-spacing: 1px;
+  background: #efefef;
+}
+
+h1, h2, h3, h4, ul, li, a, p, input, label, div, footer{
+  margin: 0;
+  padding: 0;
+  font-family: 'Noto Sans', sans-serif;
+  color: #656565;
+}
+
+button {
+  cursor: pointer;
+  margin: 0;
+  padding: 0;
+  font-family: 'Noto Sans', sans-serif;
+  background-color: #df1d1d;
+  color: #fff;
+}
+
+ul{
+  list-style-type: none;
+}
+
+a{
+  text-decoration: none;
+}
+
+nav{
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 20px;
+}
+
+nav ul{
+  display: flex;
+  align-items: center;
+}
+
+nav li{
+  margin-left: 20px;
+}
+
+nav li a{
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 0.8em;
+  display: block;
+  padding: 10px 16px;
+  letter-spacing: 2px;
+}
+
+nav img {
+  width: 150px;
+}
+
+form h2{
+  font-size: 2.4em;
+  font-weight: 900;
+  margin-bottom: 40px;
+}
+
+form{
+  width: 360px;
+  margin: 0 auto;
+  padding: 30px;
+  box-shadow: 1px 2px 3px rgba(0,0,0,0.1);
+  border-radius: 10px;
+  background: white;
+}
+
+input{
+  padding: 10px 12px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  font-size: 1em;
+  width: 100%;
+}
+
+label{
+  display: block;
+  margin: 20px 0 10px;
+}
+button{
+  margin-top: 30px;
+  border-radius: 36px;
+  background: #df1d1d;
+  border:0;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 0.8em;
+  display: block;
+  padding: 10px 16px;
+  letter-spacing: 2px;
+}
+
+button:hover {
+  background: #f65757;
+}
+
+.error{
+  color: #ff0099;
+  margin: 10px 2px;
+  font-size: 0.8em;
+  font-weight: bold;
+}
+
+.header-btn {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.header-btn a {
+  cursor: pointer;
+  border-radius: 5px;
+  background: #df1d1d;
+  padding: 5px 20px;
+  text-align: center;
+  color: #fff;
+}
+
+.header-btn a:hover {
+  background: #f65757;
+}
+
+header{
+  display: flex;
+  align-items: center;
+}
+
+header img{
+  width: 100%;
+}
+
+header h2{
+  font-size: 3em;
+  margin-bottom: 10px;
+}
+
+header h3{
+  font-size: 1.6em;
+  margin-bottom: 10px;
+  margin-left: 2px;
+  color: #999;
+}
+
+footer{
+  text-align: center;
+  margin-top: 55px;
+  color: #000000;
+}
+
+.car-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 50px;
+  gap: 50px;
+}
+
+.car-list img, h3, p {
+  padding: 5px;
+}
+
+.car-list li {
+  border-radius: 10px;
+  padding: 25px;
+  box-shadow: 1px 1px 2px 2px rgba(0,0,0,0.1);
+}
+
+.btn-group {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.btn-group button {
+  background: #df1d1d;
+  color: #fff;
+}
+
+.btn-group button:hover {
+  background: #f65757;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+  margin: 3% auto;
+  width: 26.5%;
+}
+
+.modal-content label {
+  font-size: 15px;
+  color: #656565;
+}
+
+.modal-content form {
+  background-color: #efefef;
+  width: 400px;
+}
+
+.modal-content form input {
+  height: 30px;
+}
+
+.modal-content button {
+  background: #df1d1d;
+}
+
+.modal-content button:hover {
+  background: #f65757;
+}
+
+.close {
+  color: #aaa;
+  font-size: 40px;
+  font-weight: bold;
+  float: right;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#carForm {
+  margin-top: 50px;
+  width: 50%;
+}
+
+#carForm button {
+  background: #df1d1d;
+}
+
+#carForm button:hover {
+  background: #f65757;
+}
+
+#messageForm textarea {
+  width: 100%;
+  height: 20%;
+}
+
+.btn-group .rent-car-btn {
+  background-color: #9a0000;
+}
+
+.btn-group .rent-car-btn:hover {
+  background-color: #df1d1d;
+}
+
+.messages-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.message {
+  margin-top: 50px;
+  text-align: center;
+  display: none;
+  font-weight: 900;
+  background-color: #dcdcdc;
+  padding: 20px 0;
+  width: 50%;
+  border-radius: 10px;
+}
+
+.success {
+  color: rgb(0, 183, 0);
+  font-weight: 900;
+}
+
+.error2 {
+  color: #b90000;
+}
+

@@ -1,0 +1,25 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Automobilių nuoma</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <nav>
+    <a href="/">
+      <img src="/car-logo.png" alt="logo">
+    </a>
+    <ul>
+      <% if (user) {  %>
+          <li>Sveiki, <%= user.email %></li>
+          <li><a href="/create">Įkelti automobilį</a></li>
+          <li><a href="/cars">Nuoma</a></li>
+          <li><a href="/logout">Atsijungti</a></li>
+      <% } else { %>
+          <li><a href="/login">Prisijungti</a></li>
+          <li><a href="/signup" class="red-btn">Registracija</a></li>
+      <% } %>
+    </ul>
+  </nav>
+  

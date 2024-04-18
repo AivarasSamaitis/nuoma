@@ -1,0 +1,83 @@
+<%- include('../partials/header') -%>
+
+<h2>Įkelti naują automobilį</h2>
+
+<div class="messages-container">
+  <div id="createSuccess" class="message success">Automobilis įkeltas sėkmingai.</div>
+  <div id="createError" class="message error2">Nepavyko įkelti automobilio. Bandykite dar kartą.</div>
+</div>
+
+<form id="carForm" enctype="multipart/form-data">
+    <label for="brand">Markė:</label>
+    <input type="text" id="brand" name="brand" required>
+    <label for="model">Modelis:</label>
+    <input type="text" id="model" name="model" required>
+    <label for="year">Metai:</label>
+    <input type="number" id="year" name="year" required>
+    <label for="engine">Variklio tipas:</label>
+    <input type="text" id="engine" name="engine" required>
+    <label for="transmission">Transmisija:</label>
+    <input type="text" id="transmission" name="transmission" required>
+    <label for="power">Galia (kW):</label>
+    <input type="number" id="power" name="power" required>          
+    <label for="consumption">Kuro sąnaudos (l):</label>
+    <input type="number" id="consumption" name="consumption" required>
+    <label for="price">Kaina (€/mėn):</label>
+    <input type="text" id="price" name="price" required>
+    <label for="photo">Nuotrauka:</label>
+    <input type="file" id="photo" name="photo" accept="image/*">
+    <button type="button" onclick="submitForm(event)">Įkelti</button>
+</form>
+
+<script>
+    async function submitForm() {
+    event.preventDefault()
+
+    const brand = document.getElementById('brand').value
+    const model = document.getElementById('model').value
+    const year = document.getElementById('year').value
+    const engine = document.getElementById('engine').value
+    const transmission = document.getElementById('transmission').value
+    const power = document.getElementById('power').value
+    const consumption = document.getElementById('consumption').value
+    const price = document.getElementById('price').value
+    const photo = document.getElementById('photo').files[0]
+
+    const formData = new FormData()
+    formData.append('brand', brand)
+    formData.append('model', model)
+    formData.append('year', year)
+    formData.append('engine', engine)
+    formData.append('transmission', transmission)
+    formData.append('power', power)
+    formData.append('consumption', consumption)
+    formData.append('price', price)
+    formData.append('photo', photo)
+
+    try {
+        const res = await fetch('/cars', {
+            method: 'POST',
+            body: formData,
+        })
+        if (res.ok) {
+            window.scrollTo({ top: 0, behavior: 'smooth' })
+            document.getElementById('createSuccess').style.display = 'block'
+                setTimeout(() => {
+                document.getElementById('createSuccess').style.display = 'none'
+                location.reload()
+                }, 2500)
+        } else {
+            window.scrollTo({ top: 0, behavior: 'smooth' })
+            document.getElementById('createError').style.display = 'block'
+                setTimeout(() => {
+                document.getElementById('createError').style.display = 'none'
+                location.reload()
+                }, 3000)
+        }
+    } catch (err) {
+        console.log('Klaida siunčiant formą:', err)
+    }
+}
+</script>
+
+<%- include('../partials/footer') -%>
